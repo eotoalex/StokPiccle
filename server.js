@@ -1,198 +1,199 @@
+// const {graphqlExpress, graphiqlExpress} =require('apollo-server-express');
 require('dotenv').config();
-const store = require('./REDUX/store');
-const User = require('./models/User');
+const {
+  ApolloServer,
+  AuthenticationError,
+} = require('apollo-server-express');
+const typeDefs = require('./schema');
+const resolvers = require('./resolvers');
+// const { method } = require('./resolvers');
+
+const express = require('express');
+const port = process.env.PORT || 4001;
+
+// HEROKU CONNECTION
+// Need a process.env for this port as well. Or look over GraphQL .env for Apollo Server.
+// Set up proxy server in package.json.
+// Test online database registration and server end points through apollo.
+// Design login and registration page with Google, Instagram and Facebook, login for speed.
+
+// BID SCREEN
+//  Seller and Buyer price meet in the middle of the Bid or Ask and they also agree on time. Price for delivery decreases
+// a percentage as the driver goes over the agreed upon time frame. 
+// Investers can invest in good drivers, for a percentage. 
+//  5 4 and 3 stars are in a class of their own. Quiggly will contribute to the invester pool.
+//  Seller and Buyer agree on Price and Quiggly price is the percentage of the delivery fee which was agreed upon.
+//  PERCENTAGE contingent on | TIME - Speed of Delivery (calculated by tracking) | CUSTOMER SERVICE - messaging, 
+//  transparency, smiles |
+//  | SATISFACTION - was the item the exact item, was something missing | ERRROR HANDLING - Either N/A if no error or 
+//  a rating when the delivery guy fixes error (Is rated higher when averaged) => This percentage for tip (Quiggly)
+//  will also be averaged in for the 5 star rating system.
+
+// Section for Delivery News which shows the price for a delivery of a given product and connects it with Other delivery services
+// to show the savings. Lists how many deliveries are currently out, how many were successful and how many have had issues, how many
+// were resolved.
+
+// PROFILE SCREEN
+// Driver Blogs/Newsletter - Drivers can personalize their pages, show their badges and credentials (background check, etc.) Also, can show
+// there bio and they can also post their pictures as well. Shows how many MILES traveled to deliver, how many successful deliveries,
+// rating, comments left after delivery, negative comments, issues that came up and if the driver resolved the issues. (Drivers can
+// put out news letters that can be subscribed to by other delivery people or customers.)
+
+// ISSUES SCREEN
+// Issues that might arise might include -> Dishonesty/Fraud, INCORRECT ORDERS, wrong addresses, no contact, mapping,
+// Background checks, designs structure throughout app, lack of buy-in to reward, CONFUSION FOR USERS -- placing
+// orders (Address auto* or once then auto , Type of order drop down*,ORDER DESCRIPTION, price of order, price of 
+// delivery, QUIGGLY BONUS)
+// Auto generate words when typing, tab to skip lines forward and back by scrolling and as user scrolls the box 
+// highlights to the next or previous based on the scrolling area focus. Once highlighted the keyboard pops up.
+
+// BACKGROUND CHECK SCREEN
+// BACKGROUND CHECK - The transition to background checking might be time consuming and lift if people do not want to 
+// pay, so the payment system has to be quick. We can set up paypal for this or some other money transaction, like 
+// credit card transaction that is saved.
+
+const PORT = 3001;
+const db = require('./config/database');
+const http = require('http');
+const cors = require('cors');
+const morgan = require('morgan');
+const server = new ApolloServer({ 
+  typeDefs, 
+  resolvers,
+});
+async function startServer() { server.start();} 
 const jwt = require ('jsonwebtoken')
-const userLoginAction = require ('./REDUX/actions/action');
-const argon2 = require('argon2');
-const user = []
-const unsubscribe = store.subscribe(() => { 
-  return console.log('State after dispatch', store.getState())})
+const app = express();
+const { gql, useMutation } = ('@apollo/client');
 
-const resolvers = {
-    Query: {
-        // Query all Users. 
-        allUsers: async () => {
-            await User.findAll()
-            .then (res => {
-                res.map((data) => {
-                  user.push(data.dataValues)
-                  console.log(data.dataValues)
-                })
-            })
-            .catch(error => {
-                console.log(error)
-              })
-            return user
-        },    
-        // Authenticate user login information and generate user access and refresh tokens.
-        userAuth: async (parent, args, context, info) => {
-          let passValid = null;
-          await User.findOne({where: {email : args.email}})
-          .then ((res,req) => {
-            if( res === null){
-              console.log("This user is not in the database.")
-              return passValid = false;
-            } else if (args.password === res.dataValues.password && args.email === res.dataValues.email ) {
-              return passValid = true;
-              }
-          })
-          .catch(error => {
-            console.log(error)
-          })
-          updateUserTokens = (id) => {
-            // // Generate token.
-          const accessToken = generateAccessToken ("User")
-          const refreshToken = generateRefreshToken ("UserRefresh")
-
-          // const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
-          // const data = { accessToken:accessToken, refreshToken:refreshToken }
-          const intId = parseInt(id, 10)
-          console.log("Int Id", intId)
-
-          function generateAccessToken (user) {
-            let usr = {user:JSON.stringify(user)}
-            let access = { generatedToken : JSON.stringify(process.env.ACCESS_TOKEN_SECRET) }
-            return jwt.sign(usr, access.generatedToken, {expiresIn:'14d'})
-          }
-
-          function generateRefreshToken (user) {
-            let usr = {user:JSON.stringify(user)}
-            let access = { generatedRefreshToken : JSON.stringify(process.env.REFRESH_TOKEN_SECRET) }
-            return jwt.sign(usr, access.generatedRefreshToken, {expiresIn:'14d'})
-          }
-
-          // function authenticatetoken (req, res, next) {
-          //   const authHeader = req.headers['authorization']
-          //   const token = authHeader && authHeader.split(' ')[1]
-          //   if (token == null ) return res.sendStatus(401)
-          
-          //   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-          //     if (err) return res.sendStatus(403)
-          //     req.user = user
-          //     // console.log("User ",user)
-          //     next()
-          //   })
-          // }
-
-            User.update({
-              accesstoken: accessToken,
-              refreshtoken: refreshToken
-            }, {
-              where: {id: intId}
-            })
-            .then( async function(res){
-              console.log("accesstoken => ", accessToken);
-              console.log("accesstoken => ", refreshToken);
-
-            }).catch(error => {
-              console.log(error)
-            })
-           
-          }
-          if(passValid){
-            await updateUserTokens(8)
-          }
-          return passValid;
-        },    
-    },
-
-    Mutation: {
-        async createUser(parent, args, context, info) {
-          await User.create({
-              username:args.username,
-              email: args.email,
-              password: args.password,
-            })
-            .then(function(res){
-              console.log("Just ADDED => ",res, " to the database.", args) 
-            })
-            .catch(error => {
-              console.log(error)
-            })
-            return 1;
-        } ,
-
-        // Updates users accesstoken and refreshtoken.
-        async UpdateUserTokens (parent, args, context, info) {
-          
-          // // Generate token.
-          const accessToken = generateAccessToken ("User")
-          const refreshToken = generateRefreshToken ("UserRefresh")
-
-          // const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
-          // const data = { accessToken:accessToken, refreshToken:refreshToken }
-          const intId = parseInt(args.id, 10)
-          console.log("Int Id", intId)
-
-          function generateAccessToken (user) {
-            let usr = {user:JSON.stringify(user)}
-            let access = { generatedToken : JSON.stringify(process.env.ACCESS_TOKEN_SECRET) }
-            return jwt.sign(usr, access.generatedToken, {expiresIn:'14d'})
-          }
-
-          function generateRefreshToken (user) {
-            let usr = {user:JSON.stringify(user)}
-            let access = { generatedRefreshToken : JSON.stringify(process.env.REFRESH_TOKEN_SECRET) }
-            return jwt.sign(usr, access.generatedRefreshToken, {expiresIn:'14d'})
-          }
-
-          // function authenticatetoken (req, res, next) {
-          //   const authHeader = req.headers['authorization']
-          //   const token = authHeader && authHeader.split(' ')[1]
-          //   if (token == null ) return res.sendStatus(401)
-          
-          //   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-          //     if (err) return res.sendStatus(403)
-          //     req.user = user
-          //     // console.log("User ",user)
-          //     next()
-          //   })
-          // }
-
-           await User.update({
-              accesstoken: accessToken,
-              refreshtoken: refreshToken
-            }, {
-              where: {id: intId}
-            })
-            .then( async function(res){
-              // Insert access and refresh tokens to Redux and then add to async storage from login screen when process 
-              // of adding to DB is complete.
+app.set('trust proxy', true);
+app.use(cors());
+app.use(morgan('dev'));
+app.use(express.json());
 
 
+app.get('/posts',authenticatetoken, (req, res) => {
+  res.json(req.user)
+})
 
-              console.log("accesstoken => ", accessToken);
-              console.log("accesstoken => ", refreshToken);
+app.post('/login', (req, res) => {
+const id = 8
+const username = req.body
+const user = {name:username}
 
-            }).catch(error => {
-              console.log(error)
-            })
-           console.log
-           return user;
+// Creates access token.
+const accessToken = generateAccessToken (user)
+const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
+const data = { id:id, accessToken:accessToken, refreshToken:refreshToken }
+
+addTokenstoDB(data)
+res.json({ accessToken:accessToken, refreshToken:refreshToken})
+})
+
+function addTokenstoDB (data) {
+  const [updateUserTokens] = useMutation(UPDATE_TOKENS);
+  const UPDATE_TOKENS = gql`
+      mutation UpdateUserTokens($id: ID!) {
+        updateUserTokens({id: $id, accessToken: $accessToken, refreshToken: $refreshToken }) {
+          id
+          username
+          email 
         }
-    },
+      }
+    `;
+  if (data){ 
+    updateUserTokens({variables: {id: data.id, accessToken: data.accessToken,
+      refreshToken: data.refreshToken}})
+      // console.log("accessToken : ",data.accessToken,"refreshToken : ", data.refreshToken)
+  } else{
+    console.log("Data object is undefined")
+  }
 }
 
+app.post('/token', (req, res) =>{
+  //Takes refresh token from the body of the request
+  const refreshToken = req.body
+  console.log("Request body in Token path...", refreshToken)
+})
 
-// function mapStateToProps (state){
-//   return{
-//     store:state
-//   }
-// }
+function generateAccessToken (user) {
+  return jwt.sign(user,process.env.ACCESS_TOKEN_SECRET, {expiresIn:'15s'})
+}
 
-// // Allows one to modify the state in the store. (Increase the counter by 1)
-// function mapDispatchToProps(dispatch){
-//   return({   
-//     dispatchAction:(data) => {
-//       // not sure how to transfer the data I put in here to the app.js component.
-//       // dispatch ({type:'RESET_LOGIN_STATUS'})
-      
-//     }
-//   });
-// };
+function authenticatetoken (req, res, next) {
+  const authHeader = req.headers['authorization']
+  const token = authHeader && authHeader.split(' ')[1]
+  if (token == null ) return res.sendStatus(401)
 
-module.exports = (resolvers);
-// module.exports = {
-//   method: function() {return console.log("hello world")}
-// };
-// module.exports = connect(mapStateToProps,mapDispatchToProps);
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+    if (err) return res.sendStatus(403)
+    req.user = user
+    // console.log("User ",user)
+    next()
+  })
+}
+
+// Can I put middleware in a function in order to invoke it??
+
+startServer()
+// server.applyMiddleware({ app , path:"/graphql"});
+ const httpServer = http.createServer(app);
+// server.installSubscriptionHandlers(httpServer);
+
+
+// Testing database connection.
+db
+  .authenticate()
+  .then(function(res) {
+  console.log('Connection has been established successfully.');
+  }, function (err) {
+  console.log('Unable to connect to the database: ', err);
+  });
+
+ 
+
+// Create to database
+//  User.create({
+//     username:"Grant Hill",
+//     email:"Grant@alex.com",
+//     password:"password",
+//   }).then(function(res){
+//    console.log(res) 
+//   }).catch(error => {
+//     console.log(error)
+//   })
+
+// Read from Database
+  // User.findAll()
+  // .then (res => {
+  //  res.map((data) => {
+  //    console.log(data.dataValues)
+  //  });
+
+  // })
+  // .catch(error => {
+  //   console.log(error)
+  // })
+
+// Updates database
+  // User.update(
+    // User.update(
+    //   {username: "Pierre Sucks!!"},
+    //   { where: {id: 1} }
+    // )
+
+// Delete from database
+  // User.destroy(
+  //   {
+  //     where: {id:1}
+  //   }
+  // )
+ 
+// Reset database entry.
+  // User.sync({force: true}) 
+app.listen(PORT, () => {
+  console.log(`Express Server listening on port ${PORT}`);
+});
+httpServer.listen({port}, () => {
+  console.log(`Apollo Server listening on port ${port}`);
+});

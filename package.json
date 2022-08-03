@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
+    "android": "nodemon server.js & react-native run-android",
+    "ios": "nodemon server.js & react-native run-ios",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint ."
@@ -16,6 +16,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
+    "graphql": "^16.5.0",
     "http": "^0.0.1-security",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
