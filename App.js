@@ -110,3 +110,177 @@ const styles = StyleSheet.create({
 });
 
 export default App;
+                       /**
+ 
+//  *
+// //  * @format
+// //  * @flow
+// //  */
+// // import 'react-native-gesture-handler';
+// import React, { useState, useEffect } from 'react';
+// import QuigglyApp from './screens/navigator/screensStack';
+// import { Provider } from 'react-redux';
+// // import { createStore } from 'redux';
+// import { ApolloProvider, useQuery } from "@apollo/react-hooks";
+// import ApolloClient from "apollo-boost";
+// import axios from 'axios';
+// import store from './REDUX/store';
+// import 'node-libs-react-native/globals';
+// // import'./app.js';
+
+
+// // This is where I would establish the database info to be imported for the app.
+// // const initialState = {
+// //   usersInDB:[],
+// //   tokens:[]
+// //   // dbFinishedLoad:''
+// // }
+
+// // Checking to see if db is loaded into store.
+// // let dbFinishedLoad = null;
+
+// // const httpLink = createHttpLink({
+// //   uri: 'http://localhost:4000/graphql'
+// // })
+
+// const client = new ApolloClient({
+//   // httpLink
+//   uri:'http://192.168.0.3:4001/graphql'
+//   // cache: new InMemoryCache()
+// })
+// const resObjects = [];
+// // const bburner = "Bburner@gmail.com"
+// // const password = "pass"
+// userDbReq =  async () => {
+//   const res = []
+//   // console.log("Before axios request is made")
+//    await axios({
+//     url: 'http://192.168.0.3:4001/graphql',
+//     method: 'post',
+//     data: {
+//       query:`query{
+//         allUsers{
+//           id
+//           username
+//           email
+//           password
+//           accesstoken
+//           refreshtoken
+//         }
+//       }`
+//     }
+//   })
+//    .then( async function(response){
+//      const resObj = response.data.data.allUsers;
+//      await resObj.map((user) => {
+//       // console.log("Individual Users ",  user)
+//       // console.log("resObjects", resObjects)
+//       resObjects.push(user);
+    
+//      })
+
+//       // console.log("res object to be parsed ",response.data.data.allUsers)
+      
+//       // response
+//       // dbFinishedLoad = true;
+//   })
+//   .catch((err) => {
+//       console.log(err.request)
+//   })
+//   // console.log("After axios request is made")
+//   // console.log("res in function", res)
+//   // return res
+  
+// }
+
+// // userAuthReq = async () => {
+// //   await axios({
+// //     url: 'http://192.168.0.3:4001/graphql',
+// //     method: 'post',
+// //     data: {
+// //       query:`query{
+// //         userAuth(
+// //           email: "${bburner}",
+// //           password: "${password}"
+// //           )
+// //           {id username email accesstoken refreshtoken}
+          
+        
+// //       }`
+// //     }
+// //   })
+// //    .then( async function(response){
+// //      console.log('App Response from userAuth Axios Req =>',response)
+    
+// //      })
+// //   .catch((err) => {
+// //       console.log(err.request)
+// //   })
+// // }
+
+// // These reducers will modify the database information and read from the database for the whole app as well.
+// // Need to add an action.
+// // const reducer =  (state = initialState, action) => {
+// //   const newState = {
+// //     users:[]
+// //   }
+// //   if (state.usersInDB.length === 0){
+// //     // console.log("Length of usersInDB array is less than zero on start up")
+// //     action.type = "INITIAL_DB_REQ";
+// //   } else {
+// //     console.log("The length of users array is greater than zero")
+// //   }
+
+// //   // Needs to get into these actions when the state in the store is being modified.
+
+// //   switch(action.type){
+// //     case "INITIAL_DB_REQ":  
+// //     userDbReq()
+// //     newState.users.push(resObjects)
+// //     return newState;
+
+// //     // dbFinishedLoad = false
+// //       // console.log("We will begin initial db request.")
+    
+// //   //Add User to DB
+// //     // case 'ADD_USER':
+// //     //   newState.userName = action.data.name
+// //     //   newState.userEmail = action.data.email
+// //     //   newState.userPassword = action.data.password
+// //     //   console.log("Just before returning the state",initialState)
+      
+// //     //   return newState;
+// //     //Read all Users in DB
+// //     // Update User in DB
+// //     // Delete User in DB
+// //   }
+// //   return state
+// // }
+
+// // const store = createStore(reducer)
+// // console.log("Store" , store.getState())
+
+// // store.subscribe(() => {
+// //   console.log('Store updated!', store.getState());
+// // })
+
+// function App () {
+//   const [usersInDB, setusersInDB] = useState();
+ 
+//   useEffect(() => {
+//     // userAuthReq()
+//     // await userDbReq();
+//     // console.log("Store in APP => ", store.getState())
+    
+//   })
+//   //  setusersInDB(0)
+//   return ( 
+//     <Provider store={store}>
+//       <ApolloProvider client={client}>
+//         <QuigglyApp/>
+//       </ApolloProvider>
+//     </Provider>
+//   );
+// };
+
+// export default App;
