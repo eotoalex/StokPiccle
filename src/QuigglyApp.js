@@ -104,26 +104,26 @@ const BidStack = createStackNavigator();
       </ProfileStack.Navigator>
     )
   }
-  // QuigglyStackScreen = ({navigation}) => {
-  //   return(
-  //     <QuiggliesStack.Navigator>
-  //       <QuiggliesStack.Screen 
-  //         name={"Login"} 
-  //         component={Login}
-  //         options={{
-  //           headerLeft: () => (
-  //             <Icon.Button 
-  //               name='ios-menu' 
-  //               size={25} 
-  //               backgroudColor="white" 
-  //               onPress={() => {navigation.openDrawer()}}
-  //             />
-  //           )
-  //         }}/>  
+  QuigglyStackScreen = ({navigation}) => {
+    return(
+      <QuiggliesStack.Navigator>
+        <QuiggliesStack.Screen 
+          name={"Login"} 
+          component={Login}
+          options={{
+            headerLeft: () => (
+              <Icon.Button 
+                name='ios-menu' 
+                size={25} 
+                backgroudColor="white" 
+                onPress={() => {navigation.openDrawer()}}
+              />
+            )
+          }}/>  
           
-  //     </QuiggliesStack.Navigator>
-  //   )
-  // }
+      </QuiggliesStack.Navigator>
+    )
+  }
   // LogoutStackScreen = ({navigation}) => {
   //   const logoutFunction = async () => {
   //     await store.dispatch(action.userLoginReset())
@@ -259,21 +259,22 @@ const BidStack = createStackNavigator();
       // The user is NOT logged in here.
       isLoggedIn = "Login"
       initialScreen = "Login"
+      // Need to change this to LoginStackScreen.
       isLoggedInStack = this.QuigglyStackScreen
     }
 
     // console.log("props in quiggly app 8765 ", this.props.store)
 
     return(
-      <Drawer.Navigator initialRouteName={Profile}>
+      <Drawer.Navigator initialRouteName={initialScreen}>
   
         <Drawer.Screen name={"Home"} component={HomeScreen}/>
-        {/* <Drawer.Screen name={"Profile"} component={this.ProfileStackScreen}/>
-        <Drawer.Screen name={"Wigglies"} component={this.WiggliesStackScreen}/> 
-        <Drawer.Screen name={"Register"} component={this.RegisterStackScreen}/>  
-        <Drawer.Screen name={"ChatScreen"} component={this.ChatStackScreen}/> 
-        <Drawer.Screen name={"BidScreen"} component={this.BidStackScreen}/> 
-        <Drawer.Screen name={isLoggedIn} component={isLoggedInStack}/>  */}
+        <Drawer.Screen name={"Login"} component={Login}/>
+        {/* <Drawer.Screen name={"Wigglies"} component={this.WiggliesStackScreen}/>  */}
+        {/* <Drawer.Screen name={"Register"} component={this.RegisterStackScreen}/>   */}
+        {/* <Drawer.Screen name={"ChatScreen"} component={this.ChatStackScreen}/> 
+        <Drawer.Screen name={"BidScreen"} component={this.BidStackScreen}/>  */}
+        {/* <Drawer.Screen name={isLoggedIn} component={isLoggedInStack}/>  */}
       
       </Drawer.Navigator>
     );
