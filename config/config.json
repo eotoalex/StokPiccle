@@ -8,7 +8,7 @@
       "operatorsAliases": false
     },
     "test": {
-      "username": "root",
+      "username": "ro",
       "password": null,
       "database": "database_test",
       "host": "localhost",
