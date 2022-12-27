@@ -1,6 +1,9 @@
 {
   "name": "Quiggly2.0",
   "version": "0.0.1",
+  "engines": {
+    "node": "16.15.1"
+  },
   "private": true,
   "scripts": {
     "android": "nodemon server.js & react-native run-android",
