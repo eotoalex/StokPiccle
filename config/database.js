@@ -16,7 +16,23 @@ module.exports = new Sequelize(
 //             idle: 10000
 //         }
 // }
+    // host='ec2-52-3-60-53.compute-1.amazonaws.com',
+    // database=process.env.DATABASE,
+    // user=process.env.USER,
+    // password='a3b4a9ebe14723b05385f1708888c045420c0450c201d10b237cc045d8d650c0',{
+    //     // I see now. Explicitly stating the diaclect is conflicting with my dotenv variables being read properly.
+    //     dialect:'postgres',
+    //     pool: {
+    //         max: 5,
+    //         min: 0,
+    //         idle: 10000
+    //     }
+    // },
     
+    // PORT=5432,
+
+
+
 
     database ='quiggly_db',
     process.env.DB_USER,
