@@ -6,9 +6,9 @@
   },
   "private": true,
   "scripts": {
+    "start":"nodemon server.js & react-native run-ios",
     "android": "nodemon server.js & react-native run-android",
     "ios": "nodemon server.js & react-native run-ios",
-    "start": "react-native start",
     "test": "jest",
     "lint": "eslint ."
   },
