@@ -18,7 +18,7 @@
     "production": {
       "username": "root",
       "password": null,
-      "database": "database_production",
+      "database": "process.env.DATABASE_URL",
       "host": "localhost",
       "dialect": "postgres",
       "operatorsAliases": false

@@ -54,6 +54,7 @@ const port = process.env.PORT || 4001;
 
 const PORT = 3001;
 const db = require('./config/database');
+const User = require('./models/user')
 const http = require('http');
 const cors = require('cors');
 const morgan = require('morgan');
@@ -145,7 +146,7 @@ startServer()
 // server.installSubscriptionHandlers(httpServer);
 
 
-// Testing database connection.
+// Testing database connection (local).
 db
   .authenticate()
   .then(function(res) {
@@ -157,27 +158,38 @@ db
  
 
 // Create to database
-//  User.create({
-//     username:"Grant Hill",
-//     email:"Grant@alex.com",
-//     password:"password",
-//   }).then(function(res){
-//    console.log(res) 
-//   }).catch(error => {
-//     console.log(error)
-//   })
+ User.create({
+    id:7,
+    username:"Beyonce Carter",
+    email:"bcarter@gmail.com",
+    password:"pass",
+  }).then(function(res){
+   console.log(res) 
+  }).catch(error => {
+    console.log(error)
+  })
+  User.create({
+    id:8,
+    username:"Nikola Tesla",
+    email:"ntesla@gmail.com",
+    password:"pass",
+  }).then(function(res){
+   console.log(res) 
+  }).catch(error => {
+    console.log(error)
+  })
 
 // Read from Database
-  // User.findAll()
-  // .then (res => {
-  //  res.map((data) => {
-  //    console.log(data.dataValues)
-  //  });
+  User.findAll()
+  .then (res => {
+   res.map((data) => {
+     console.log(data.dataValues)
+   });
 
-  // })
-  // .catch(error => {
-  //   console.log(error)
-  // })
+  })
+  .catch(error => {
+    console.log(error)
+  })
 
 // Updates database
   // User.update(

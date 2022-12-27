@@ -35,19 +35,19 @@ function Login (props){
     
     if (store.getState().login === true){
       
-      // setState(() => {
-      //   return {
-      //     userEmail: "",
-      //     userPass: "",        
-      //   }
-      // })
+      setState(() => {
+        return {
+          userEmail: "",
+          userPass: "",        
+        }
+      })
       
-      // store.dispatch(action.userLoginReset());
+      store.dispatch(action.userLoginReset());
       
 
     } else {
       console.log("Not a valid user.")
-      // console.log("5 After userAuthReq ", store.getState(), props.store)
+      console.log("5 After userAuthReq ", store.getState(), props.store)
       props.navigation.push('Login')  
     };
 
