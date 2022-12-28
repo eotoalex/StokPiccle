@@ -159,9 +159,9 @@ db
 
 // Create to database
 //  User.create({
-//     id:1,
-//     username:"Lebron James",
-//     email:"ljames@gmail.com",
+//     id:5,
+//     username:"Elion Gonzalez",
+//     email:"egonzalez@gmail.com",
 //     password:"pass",
 //   }).then(function(res){
 //    console.log(res) 
@@ -169,9 +169,9 @@ db
 //     console.log(error)
 //   })
 //   User.create({
-//     id:2,
-//     username:"Oprah Winfrey",
-//     email:"owinfrey@gmail.com",
+//     id:6,
+//     username:"Elvis Presley",
+//     email:"epresley@gmail.com",
 //     password:"pass",
 //   }).then(function(res){
 //    console.log(res) 
