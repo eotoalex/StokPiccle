@@ -1,59 +1,28 @@
 const Sequelize = require("sequelize");
-// HOW WAS I ABLE TO GET AWAY WITH NOT PUTTING => require('dotenv').config???
+const development = 1;
+const production = 0;
 
-module.exports = new Sequelize(
- database=process.env.DATABASE_ ,
- user=process.env.USER_,
- password=process.env.PASSWORD_,{
-    host:process.env.HOST_,
-    dialect:process.env.DIALECT_,
-    dialectOptions: {
-        ssl: {
-           rejectUnauthorized: false
-        }
-    }
-    // process.env.DB,
-//     connection = 'postgres://wfmjbuikhkvwtj:a3b4a9ebe14723b05385f1708888c045420c0450c201d10b237cc045d8d650c0@ec2-52-3-60-53.compute-1.amazonaws.com:5432/dbfl02b4p6u3ei',
-//     host='ec2-52-3-60-53.compute-1.amazonaws.com',
-//     database='dbfl02b4p6u3ei',
-//     user='wfmjbuikhkvwtj',
-//     password='a3b4a9ebe14723b05385f1708888c045420c0450c201d10b237cc045d8d650c0',{
-//         // I see now. Explicitly stating the diaclect is conflicting with my dotenv variables being read properly.
-//         dialect:'postgres',
-//         pool: {
-//             max: 5,
-//             min: 0,
-//             idle: 10000
-//         }
-// }
-    // host='ec2-52-3-60-53.compute-1.amazonaws.com',
-    // database=process.env.DATABASE,
-    // user=process.env.USER,
-    // password='a3b4a9ebe14723b05385f1708888c045420c0450c201d10b237cc045d8d650c0',{
-    //     // I see now. Explicitly stating the diaclect is conflicting with my dotenv variables being read properly.
-    //     dialect:'postgres',
-    //     pool: {
-    //         max: 5,
-    //         min: 0,
-    //         idle: 10000
-    //     }
-    // },
+if (development){
     
-    // PORT=5432,
+    module.exports = new Sequelize(
+        database=process.env.DATABASE__,
+        user=process.env.USER__,
+        password=process.env.PASSWORD__,{
+           host:process.env.HOST__,
+           dialect:process.env.DIALECT__,
+       });
+} else if (production){
+    module.exports = new Sequelize(
+        database=process.env.DATABASE_ ,
+        user=process.env.USER_,
+        password=process.env.PASSWORD_,{
+           host:process.env.HOST_,
+           dialect:process.env.DIALECT_,
+           dialectOptions: {
+               ssl: {
+                  rejectUnauthorized: false
+               }
+           }
+       });
+};
 
-
-
-
-//     database ='quiggly_db',
-//     process.env.DB_USER,
-    
-//     process.env.PASSWORD, {
-//         // I see now. Explicitly stating the diaclect is conflicting with my dotenv variables being read properly.
-//         dialect:'postgres',
-//         pool: {
-//             max: 5,
-//             min: 0,
-//             idle: 10000
-//         }
-// }
-});
