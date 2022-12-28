@@ -150,7 +150,7 @@ startServer()
 db
   .authenticate()
   .then(function(res) {
-  console.log('Connection has been established successfully.');
+  console.log('Connection has successfully been established with the database.');
   }, function (err) {
   console.log('Unable to connect to the database: ', err);
   });
@@ -158,26 +158,26 @@ db
  
 
 // Create to database
- User.create({
-    id:7,
-    username:"Beyonce Carter",
-    email:"bcarter@gmail.com",
-    password:"pass",
-  }).then(function(res){
-   console.log(res) 
-  }).catch(error => {
-    console.log(error)
-  })
-  User.create({
-    id:8,
-    username:"Nikola Tesla",
-    email:"ntesla@gmail.com",
-    password:"pass",
-  }).then(function(res){
-   console.log(res) 
-  }).catch(error => {
-    console.log(error)
-  })
+//  User.create({
+//     id:1,
+//     username:"Lebron James",
+//     email:"ljames@gmail.com",
+//     password:"pass",
+//   }).then(function(res){
+//    console.log(res) 
+//   }).catch(error => {
+//     console.log(error)
+//   })
+//   User.create({
+//     id:2,
+//     username:"Oprah Winfrey",
+//     email:"owinfrey@gmail.com",
+//     password:"pass",
+//   }).then(function(res){
+//    console.log(res) 
+//   }).catch(error => {
+//     console.log(error)
+//   })
 
 // Read from Database
   User.findAll()
