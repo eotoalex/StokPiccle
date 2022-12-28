@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
-const development = 1;
-const production = 0;
+const development = 0;
+const production = 1;
 
 if (development){
     

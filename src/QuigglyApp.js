@@ -120,78 +120,30 @@ const BidStack = createStackNavigator();
               />
             )
           }}/>  
-          
       </QuiggliesStack.Navigator>
     )
   }
-  // LogoutStackScreen = ({navigation}) => {
-  //   const logoutFunction = async () => {
-  //     await store.dispatch(action.userLoginReset())
-  //     await navigation.navigate("Login")
-  //     navigation.navigate("Login")
-  //     console.log("Login status after onPress => ", this.props.store)
-  //   }
-
-  //   logoutFunction()
-    
-    
-  //   return(
-  //     <QuiggliesStack.Navigator>
-  //       <QuiggliesStack.Screen 
-  //         name={"Login"} 
-  //         component={Login}
-  //         options={{
-  //           headerLeft: () => (
-  //             <Icon.Button 
-  //               name='ios-menu' 
-  //               size={25} 
-  //               backgroudColor="white" 
-  //               onPress={() => {navigation.openDrawer()}}
-  //             />
-  //           )
-  //         }}/>  
-  //     </QuiggliesStack.Navigator>
-  //   )
-  // }
-  // WiggliesStackScreen = ({navigation}) => {
-  //   return(
-  //     <WiggliesStack.Navigator>
-  //       <WiggliesStack.Screen 
-  //         name={"Wigglies"} 
-  //         component={Wigglies}
-  //         options={{
-  //           headerLeft: () => (
-  //             <Icon.Button 
-  //               name='ios-menu' 
-  //               size={25} 
-  //               backgroudColor="white" 
-  //               onPress={() => {navigation.openDrawer()}}
-  //             />
-  //           )
-  //         }}/>  
-  //     </WiggliesStack.Navigator>
-  //   )
-  // }
-  // RegisterStackScreen = ({navigation}) => {
-  //   return(
-  //     <RegisterStack.Navigator>
-  //       <RegisterStack.Screen 
-  //         name={"Register"} 
-  //         component={Register}
-  //         options={{
-  //           headerLeft: () => (
-  //             <Icon.Button 
-  //               name='ios-menu' 
-  //               size={25} 
-  //               backgroudColor="white" 
-  //               onPress={() => {navigation.openDrawer()}}
-  //             />
-  //           )
-  //         }}/>  
+  
+  RegisterStackScreen = ({navigation}) => {
+    return(
+      <RegisterStack.Navigator>
+        <RegisterStack.Screen 
+          name={"Register"} 
+          component={Register}
+          options={{
+            headerLeft: () => (
+              <Icon.Button 
+                name='ios-menu' 
+                size={25} 
+                backgroudColor="white" 
+                onPress={() => {navigation.openDrawer()}}
+              />
+            )
+          }}/>  
           
-  //     </RegisterStack.Navigator>
-  //   )
-  // }
+      </RegisterStack.Navigator>
+    )
+  }
   // ChatStackScreen = ({navigation}) => {
   //   return(
   //     <ChatStack.Navigator>
@@ -270,6 +222,7 @@ const BidStack = createStackNavigator();
   
         <Drawer.Screen name={"Home"} component={HomeScreen}/>
         <Drawer.Screen name={"Login"} component={Login}/>
+        <Drawer.Screen name={"Register"} component={Register}/>
         {/* <Drawer.Screen name={"Wigglies"} component={this.WiggliesStackScreen}/>  */}
         {/* <Drawer.Screen name={"Register"} component={this.RegisterStackScreen}/>   */}
         {/* <Drawer.Screen name={"ChatScreen"} component={this.ChatStackScreen}/> 

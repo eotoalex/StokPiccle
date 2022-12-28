@@ -30,7 +30,7 @@ function Login (props){
   const password = state.userPass;
 
   const submitForm = async () => {
-
+    
     await userAuthReq()
     
     if (store.getState().login === true){
@@ -66,7 +66,7 @@ function Login (props){
     // const hash = await argon2.hash(state.userPass);
     // console.log(hash)
     await axios({
-      url: 'http://192.168.0.3:4001/graphql',
+      url: 'http://192.168.0.18:4001/graphql',
       method: 'post',
       responseType:'json',
       headers: {
@@ -84,6 +84,7 @@ function Login (props){
     })
     .then( async (res, req) => { 
       result = res.data.data.userAuth;
+      console.log("RESULT = ",result)
       if (result){
         store.dispatch(action.userLoginAction());
       } else {
