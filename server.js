@@ -62,7 +62,7 @@ const server = new ApolloServer({
   typeDefs, 
   resolvers,
 });
-async function startServer() { server.start();} 
+async function startServer() {await server.start();} 
 const jwt = require ('jsonwebtoken')
 const app = express();
 const { gql, useMutation } = ('@apollo/client');
@@ -125,10 +125,6 @@ function authenticatetoken (req, res, next) {
   const authHeader = req.headers['authorization']
   const token = authHeader && authHeader.split(' ')[1]
   if (token == null ) return res.sendStatus(401)
-
-
-
-
   
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
     if (err) return res.sendStatus(403)
@@ -137,13 +133,15 @@ function authenticatetoken (req, res, next) {
     next()
   })
 }
+const httpServer = http.createServer(app);
+// Middleware loading after server starts.
+async () => {
+  await startServer();
+  server.applyMiddleware({app , path:"/graphql"});
+  server.installSubscriptionHandlers(httpServer);
+}
 
-// Can I put middleware in a function in order to invoke it??
-
-startServer()
-// server.applyMiddleware({ app , path:"/graphql"});
- const httpServer = http.createServer(app);
-// server.installSubscriptionHandlers(httpServer);
+ 
 
 
 // Testing database connection (local).
@@ -190,6 +188,8 @@ db
   .catch(error => {
     console.log(error)
   })
+
+ 
 
 // Updates database
   // User.update(
