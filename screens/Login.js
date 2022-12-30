@@ -66,7 +66,7 @@ function Login (props){
     // const hash = await argon2.hash(state.userPass);
     // console.log(hash)
     await axios({
-      url: 'http://192.168.0.18:4001/graphql',
+      url: 'http://localhost:4001/graphql',
       method: 'post',
       responseType:'json',
       headers: {
