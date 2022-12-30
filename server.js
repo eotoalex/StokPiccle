@@ -60,18 +60,19 @@ const cors = require('cors');
 const morgan = require('morgan');
 const server = new ApolloServer({ 
   typeDefs, 
-  resolvers,
+  resolvers,        
 });
 async function startServer() {await server.start();} 
 const jwt = require ('jsonwebtoken')
 const app = express();
-const { gql, useMutation } = ('@apollo/client');
+const { useMutation, useQuery } = ('@apollo/client');
+const {gql} = require( 'graphql-tag');
+
 
 app.set('trust proxy', true);
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
-
 
 app.get('/posts',authenticatetoken, (req, res) => {
   res.json(req.user)
@@ -137,12 +138,9 @@ const httpServer = http.createServer(app);
 // Middleware loading after server starts.
 async () => {
   await startServer();
-  server.applyMiddleware({app , path:"/graphql"});
-  server.installSubscriptionHandlers(httpServer);
+  await server.applyMiddleware({app , path:"/graphql"});
+  await server.installSubscriptionHandlers(httpServer);
 }
-
- 
-
 
 // Testing database connection (local).
 db
@@ -152,8 +150,6 @@ db
   }, function (err) {
   console.log('Unable to connect to the database: ', err);
   });
-
- 
 
 // Create to database
 //  User.create({
@@ -187,9 +183,47 @@ db
   })
   .catch(error => {
     console.log(error)
-  })
+  });
 
- 
+//   const QUERY_USERS = gql`
+//   query User {
+//     allUsers {
+//       id
+//       username
+//       email 
+//     }
+//   }
+// `;
+// // Test Graphql 
+// function testGqlQuery () {
+  
+//   const { loading, error, data } = useQuery(QUERY_USERS);
+  
+//     if (loading) return 'Loading...';
+//     if (error) return `Error! ${error.message}`;
+
+//     return(
+//       console.log("Data =>", data)
+//     )
+//     }
+//     testGqlQuery ()
+
+    // function Dogs({ onDogSelected }) {
+    //   const { loading, error, data } = useQuery(GET_DOGS);
+    
+    //   if (loading) return 'Loading...';
+    //   if (error) return `Error! ${error.message}`;
+    
+    //   return (
+    //     <select name='dog' onChange={onDogSelected}>
+    //       {data.dogs.map((dog) => (
+    //         <option key={dog.id} value={dog.breed}>
+    //           {dog.breed}
+    //         </option>
+    //       ))}
+    //     </select>
+    //   );
+    // }
 
 // Updates database
   // User.update(
@@ -207,9 +241,12 @@ db
  
 // Reset database entry.
   // User.sync({force: true}) 
+
 app.listen(PORT, () => {
   console.log(`Express Server listening on port ${PORT}`);
 });
 httpServer.listen({port}, () => {
   console.log(`Apollo Server listening on port ${port}`);
 });
+
+
