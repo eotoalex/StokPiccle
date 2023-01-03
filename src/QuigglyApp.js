@@ -5,7 +5,6 @@ import {connect} from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-// import { createStackNavigator } from '@react-navigation/native-stack';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import {createDrawerNavigator} from '@react-navigation/drawer';
@@ -15,20 +14,13 @@ import Profile from '../screens/Profile';
 import Login from '../screens/Login';
 import Wigglies from '../screens/BidScreen';
 import Register from '../screens/Register';
-// import userLoginReset from '../REDUX/actions/action';
 import store from '../REDUX/store.js';
 import action from '../REDUX/actions/action'
-
 import ChatScreen from '../screens/ChatScreen';
 import BidScreen from '../screens/BidScreen';
 
-// import { createStackNavigator } from '@react-navigation/stack';
-
 // const Stack = createStackNavigator();
 const Stack = createNativeStackNavigator();
-
-
-
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
@@ -43,7 +35,6 @@ const StoreContext = React.createContext('test store');
 const ChatStack = createStackNavigator();
 const BidStack = createStackNavigator();
 
- 
   class QuigglyApp extends Component {
   constructor(props) {
     super(props);

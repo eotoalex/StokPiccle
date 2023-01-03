@@ -3,13 +3,15 @@ require('dotenv').config();
 const {
   ApolloServer,
   AuthenticationError,
+
 } = require('apollo-server-express');
 const typeDefs = require('./schema');
 const resolvers = require('./resolvers');
 // const { method } = require('./resolvers');
+var { graphqlHTTP } = require('express-graphql');
 
 const express = require('express');
-const port = process.env.PORT || 4001;
+const port =4001;
 
 // HEROKU CONNECTION
 // Need a process.env for this port as well. Or look over GraphQL .env for Apollo Server.
@@ -52,7 +54,7 @@ const port = process.env.PORT || 4001;
 // pay, so the payment system has to be quick. We can set up paypal for this or some other money transaction, like 
 // credit card transaction that is saved.
 
-const PORT = 3001;
+const PORT = 4000;
 const db = require('./config/database');
 const User = require('./models/user')
 const http = require('http');
@@ -66,16 +68,30 @@ async function startServer() {await server.start();}
 const jwt = require ('jsonwebtoken')
 const app = express();
 const { useMutation, useQuery } = ('@apollo/client');
-const {gql} = require( 'graphql-tag');
+// const {gql} = require( 'graphql-tag');
+async () => {
+  await startServer();
+  await server.installSubscriptionHandlers(httpServer);
+  await server.applyMiddleware({ app});
 
-
+}
 app.set('trust proxy', true);
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
+app.use('/graphql', graphqlHTTP({
+  schema: typeDefs,
+  // rootValue: root,
+  graphiql: true,
+}))
+
 
 app.get('/posts',authenticatetoken, (req, res) => {
   res.json(req.user)
+})
+app.get('/hello', (req, res) => {
+  res.writeHead(200, {'Content-Type': 'text/plain'});
+  res.end('Hello World!\n')
 })
 
 app.post('/login', (req, res) => {
@@ -136,11 +152,11 @@ function authenticatetoken (req, res, next) {
 }
 const httpServer = http.createServer(app);
 // Middleware loading after server starts.
-async () => {
-  await startServer();
-  await server.applyMiddleware({app , path:"/graphql"});
-  await server.installSubscriptionHandlers(httpServer);
-}
+// async () => {
+//   await startServer();
+//   await server.applyMiddleware({app});
+//   await server.installSubscriptionHandlers(httpServer);
+// }
 
 // Testing database connection (local).
 db
@@ -194,7 +210,7 @@ db
 //     }
 //   }
 // `;
-// // Test Graphql 
+// // // Test Graphql 
 // function testGqlQuery () {
   
 //   const { loading, error, data } = useQuery(QUERY_USERS);
@@ -207,6 +223,8 @@ db
 //     )
 //     }
 //     testGqlQuery ()
+
+
 
     // function Dogs({ onDogSelected }) {
     //   const { loading, error, data } = useQuery(GET_DOGS);
@@ -243,8 +261,10 @@ db
   // User.sync({force: true}) 
 
 app.listen(PORT, () => {
-  console.log(`Express Server listening on port ${PORT}`);
+  console.log(`Express Server listening on port ${PORT}`, server.graphqlPath);
 });
+
+// http server may be unncessary if app.listen() performs the same function.
 httpServer.listen({port}, () => {
   console.log(`Apollo Server listening on port ${port}`);
 });
