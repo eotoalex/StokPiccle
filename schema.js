@@ -1,30 +1,19 @@
-const { gql } = require('apollo-server');
+const {
+    GraphQLSchema,
+    GraphQLObjectType,
+    GraphQLString
+  } = require('graphql')
 
-const typeDefs = gql`
-    type Text {
-        title:String
-    }
-    type User {
-        id: Int
-        username: String
-        email: String
-        password:String
-        accesstoken:String
-        refreshtoken:String
-    }
-    type Book {
-        title: String
-        author: String
-      }
-    type Mutation {
-        createUser(username: String!,email: String!,password: String!): User!
-        UpdateUserTokens(id: String!, accesstoken: String!, refreshtoken:String!):User!
-    }  
-    type Query {
-        allUsers:[User]
-        userAuth(email: String!,password: String!): Boolean!
-    }
-    
-`;
+const schema = new GraphQLSchema({
+    query: new GraphQLObjectType({
+      name: 'HelloAlexMan',
+      fields: () => ({
+        message: {
+          type: GraphQLString,
+          resolve: () => 'Hello World'
+        }
+      })
+    })
+  })
 
-module.exports = typeDefs;
+  module.exports = schema;

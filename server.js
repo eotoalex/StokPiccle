@@ -5,7 +5,7 @@ const {
   AuthenticationError,
 
 } = require('apollo-server-express');
-const typeDefs = require('./schema');
+const typeDefs = require('./typeDefs');
 const resolvers = require('./resolvers');
 // const { method } = require('./resolvers');
 var { graphqlHTTP } = require('express-graphql');
@@ -68,7 +68,9 @@ async function startServer() {await server.start();}
 const jwt = require ('jsonwebtoken')
 const app = express();
 const { useMutation, useQuery } = ('@apollo/client');
-// const {gql} = require( 'graphql-tag');
+
+
+const schema = require('./schema')
 async () => {
   await startServer();
   await server.installSubscriptionHandlers(httpServer);
@@ -80,8 +82,7 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 app.use('/graphql', graphqlHTTP({
-  schema: typeDefs,
-  // rootValue: root,
+  schema: schema,
   graphiql: true,
 }))
 
@@ -261,7 +262,7 @@ db
   // User.sync({force: true}) 
 
 app.listen(PORT, () => {
-  console.log(`Express Server listening on port ${PORT}`, server.graphqlPath);
+  console.log(`Express Server listening on port ${PORT}`);
 });
 
 // http server may be unncessary if app.listen() performs the same function.
