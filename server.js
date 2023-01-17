@@ -191,16 +191,16 @@ db
 //   })
 
 // Read from Database
-  User.findAll()
-  .then (res => {
-   res.map((data) => {
-     console.log(data.dataValues)
-   });
+  // User.findAll()
+  // .then (res => {
+  //  res.map((data) => {
+  //    console.log(data.dataValues)
+  //  });
 
-  })
-  .catch(error => {
-    console.log(error)
-  });
+  // })
+  // .catch(error => {
+  //   console.log(error)
+  // });
 
 //   const QUERY_USERS = gql`
 //   query User {
