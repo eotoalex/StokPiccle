@@ -10,7 +10,8 @@ import styles from '../styles'
 import {StyleSheet} from 'react-native';
 import axios from 'axios';
 import store from '../REDUX/store.js';
-import action from '../REDUX/actions/action'
+import action from '../REDUX/actions/action';
+import {schema} from '../schema'
 // import userLoginReset from '../REDUX/actions/action';
 // const argon2 = require('argon2');
 
@@ -63,37 +64,69 @@ function Login (props){
 
    userAuthReq = async () => {
     let result = null 
-    // const hash = await argon2.hash(state.userPass);
-    // console.log(hash)
-    await axios({
-      url: 'http://localhost:4001/graphql',
-      method: 'post',
-      responseType:'json',
-      headers: {
-        'Content-Type' : 'application/json',
-        'Accept' : 'application/json'
-      },
-      data: {
-        query:`query{
-                userAuth(
-                  email: "${state.userEmail}",
-                  password: "${state.userPass}"
-                )
-              }`
-            } 
-    })
-    .then( async (res, req) => { 
-      result = res.data.data.userAuth;
-      console.log("RESULT = ",result)
-      if (result){
-        store.dispatch(action.userLoginAction());
-      } else {
-        return false
-      }
-    })
-    .catch((err) => {
-        console.log(err)
-    })
+    
+    // await axios({
+    //   url: 'http://localhost:4001/graphql',
+    //   method: 'post',
+    //   responseType:'json',
+    //   headers: {
+    //     'Content-Type' : 'application/json',
+    //     'Accept' : 'application/json'
+    //   },
+    //   data: {
+    //     query:`query{
+    //       users {
+    //        username
+    //       }
+    //           }`
+    //         } 
+    // })
+    // .then( async (res, req) => { 
+    //   result = res.data.data.userAuth;
+    //   console.log("RESULT = ",result)
+    //   if (result){
+    //     store.dispatch(action.userLoginAction());
+    //   } else {
+    //     return false
+    //   }
+    // })
+    // .catch((err) => {
+    //     console.log(err)
+    // })
+
+    // await axios({
+    //   url: 'http://localhost:4001/graphql',
+    //   method: 'post',
+    //   responseType:'json',
+    //   headers: {
+    //     'Content-Type' : 'application/json',
+    //     'Accept' : 'application/json'
+    //   },
+    //   data: {
+    //     mutation:`mutation{
+    //       addUser {
+    //         username: args.username,
+    //         accesstoken: args.accesstoken,
+    //         refreshtoken: args.refreshtoken,
+    //         password: args.password
+    //       }
+    //           }`
+    //         } 
+    // })
+    // .then( async (res, req) => { 
+    //   result = res.data.data.userAuth;
+    //   console.log("RESULT = ",result)
+    //   if (result){
+    //     store.dispatch(action.userLoginAction());
+    //   } else {
+    //     return false
+    //   }
+    // })
+    // .catch((err) => {
+    //     console.log(err)
+    // })
+   
+    
     return result;
   }
 
