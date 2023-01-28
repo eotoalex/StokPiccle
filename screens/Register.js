@@ -157,12 +157,12 @@ function Register(props){
     
    
     // mapFunc(username, email, password, secPassword)
-
+    console.log("INSIDE SUBMITT FORM FUNCTION")
     if (addToDB){
       // THIS FUNCTION CAN TAKE ALL THE INPUTS AND THEN I WILL PROCESS THE USER INFORMATION AGAINST THE DB IN THE BACK END.
 
       axios({
-        url: 'http://192.168.0.3:4001/graphql',
+        url: 'http://localhost:4001/graphql',
         method: 'post',
         data: {
           query:`mutation {
@@ -174,7 +174,7 @@ function Register(props){
         }
       })
       .then(function(response){
-          // console.log(response)
+          console.log("RESPONSE TO THE REQUEST => ",response)
       })
       .catch((err) => {
           console.log(err)
@@ -225,6 +225,9 @@ function Register(props){
             setState(prevState => {
               return {...prevState, inputUserName : prevState.userNameInput = val}
             }) 
+            // GET THIS INPUT INTO THE MUTATION FOR GRAPHQL TO THEN UPDATE THE DATABASE AND WE ARE GOOD
+            // HOW DO I GET THE MUTATION INTO THIS PART, SHOULD I DO AN AXIOS REQUEST OR BRING IN THE COMPONENT FROM FILE.
+            console.log(state.userNameInput)
           }}
           } 
         />

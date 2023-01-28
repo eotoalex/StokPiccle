@@ -6,7 +6,7 @@ const {
     GraphQLInt,
     GraphQLNonNull,
   } = require('graphql');
-  const User = require('./models/User');
+  const User = require('./models/user');
   const user = [];
 
 const UserType = new GraphQLObjectType({
@@ -19,7 +19,7 @@ const UserType = new GraphQLObjectType({
     refreshtoken: {type: new GraphQLNonNull(GraphQLString) },
     password: { type: new GraphQLNonNull(GraphQLString) },
   })
-})
+});
 
 const RootQueryType = new GraphQLObjectType({
   name: 'Query',
@@ -42,11 +42,40 @@ const RootQueryType = new GraphQLObjectType({
         return (user) }
     }
   })   
-})
+});
+
+const RootMutationType = new GraphQLObjectType ({
+  name: 'Mutation',
+  description: 'Root Mutation',
+  fields: () => ({
+    addUser: {
+      type: UserType,
+      description: 'Add a User',
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLInt) },
+        username: { type: new GraphQLNonNull(GraphQLString) },
+        accesstoken: { type: new GraphQLNonNull(GraphQLString) },
+        refreshtoken: {type: new GraphQLNonNull(GraphQLString) },
+        password: { type: new GraphQLNonNull(GraphQLString) },
+      },
+      resolve: (parent, args) => {
+        const user = {
+          id: user.length + 1,
+          username: args.username,
+          accesstoken: args.accesstoken,
+          refreshtoken: args.refreshtoken,
+          password: args.password
+        }
+      user.push(user)
+      return user;
+      }
+    }
+  })
+});
 
 const schema = new GraphQLSchema({
-  query: RootQueryType
-})
+  query: RootQueryType,
+  mutation: RootMutationType,
+});
 
-
-  module.exports = schema;
+module.exports = schema;
