@@ -65,34 +65,37 @@ function Login (props){
    userAuthReq = async () => {
     let result = null 
     
-    // await axios({
-    //   url: 'http://localhost:4001/graphql',
-    //   method: 'post',
-    //   responseType:'json',
-    //   headers: {
-    //     'Content-Type' : 'application/json',
-    //     'Accept' : 'application/json'
-    //   },
-    //   data: {
-    //     query:`query{
-    //       users {
-    //        username
-    //       }
-    //           }`
-    //         } 
-    // })
-    // .then( async (res, req) => { 
-    //   result = res.data.data.userAuth;
-    //   console.log("RESULT = ",result)
-    //   if (result){
-    //     store.dispatch(action.userLoginAction());
-    //   } else {
-    //     return false
-    //   }
-    // })
-    // .catch((err) => {
-    //     console.log(err)
-    // })
+    await axios({
+      url: 'http://localhost:4001/graphql',
+      method: 'post',
+      responseType:'json',
+      headers: {
+        'Content-Type' : 'application/json',
+        'Accept' : 'application/json'
+      },
+      data: {
+        query:`query{
+          users {
+          
+           username
+           password
+           
+          }
+              }`
+            } 
+    })
+    .then( async (res, req) => { 
+      result = res.data.data.users;
+      console.log("RESULT = ",result)
+      if (result){
+        store.dispatch(action.userLoginAction());
+      } else {
+        return false
+      }
+    })
+    .catch((err) => {
+        console.log(err)
+    })
 
     // await axios({
     //   url: 'http://localhost:4001/graphql',
@@ -103,18 +106,24 @@ function Login (props){
     //     'Accept' : 'application/json'
     //   },
     //   data: {
-    //     mutation:`mutation{
-    //       addUser {
-    //         username: args.username,
-    //         accesstoken: args.accesstoken,
-    //         refreshtoken: args.refreshtoken,
-    //         password: args.password
-    //       }
+    //     query:`mutation {
+    //       addUser (
+    //         id:12
+    //         username: "ggodfree@gmail.com",
+    //         accesstoken: "test",
+    //         refreshtoken: "test",
+    //         password: "pass"
+    //       )
+    //       id 
+    //       username
+    //       accesstoken
+    //       refreshtoken
+    //       password
     //           }`
     //         } 
     // })
     // .then( async (res, req) => { 
-    //   result = res.data.data.userAuth;
+    //   result = res.data.data;
     //   console.log("RESULT = ",result)
     //   if (result){
     //     store.dispatch(action.userLoginAction());

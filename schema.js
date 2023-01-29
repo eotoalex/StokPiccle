@@ -7,7 +7,7 @@ const {
     GraphQLNonNull,
   } = require('graphql');
   const User = require('./models/user');
-  const user = [];
+  const users = [];
 
 const UserType = new GraphQLObjectType({
   name: 'Users',
@@ -32,14 +32,14 @@ const RootQueryType = new GraphQLObjectType({
           await User.findAll()
           .then (res => {
               res.map((data) => {
-                user.push(data.dataValues)
+                users.push(data.dataValues)
                 console.log('Data in Query=> ',data.dataValues)
               })
           })
           .catch(error => {
               console.log(error)
             })
-        return (user) }
+        return (users) }
     }
   })   
 });
@@ -54,19 +54,19 @@ const RootMutationType = new GraphQLObjectType ({
       args: {
         id: { type: new GraphQLNonNull(GraphQLInt) },
         username: { type: new GraphQLNonNull(GraphQLString) },
-        accesstoken: { type: new GraphQLNonNull(GraphQLString) },
-        refreshtoken: {type: new GraphQLNonNull(GraphQLString) },
+        // accesstoken: { type: new GraphQLNonNull(GraphQLString) },
+        // refreshtoken: {type: new GraphQLNonNull(GraphQLString) },
         password: { type: new GraphQLNonNull(GraphQLString) },
       },
       resolve: (parent, args) => {
         const user = {
-          id: user.length + 1,
+          id: users.length + 1,
           username: args.username,
           accesstoken: args.accesstoken,
           refreshtoken: args.refreshtoken,
           password: args.password
         }
-      user.push(user)
+      users.push(user)
       return user;
       }
     }
