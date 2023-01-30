@@ -16,6 +16,11 @@ function reducer (state = initialState, action){
     return {...state, login : false};
     break;
 
+    case 'ADD_USER_SUCCESSFUL':
+    console.log("USER ADDED SUCCESSFULLY")
+    return {...state, login : false};
+    break;
+
     default:
     return state
     

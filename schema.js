@@ -52,21 +52,34 @@ const RootMutationType = new GraphQLObjectType ({
       type: UserType,
       description: 'Add a User',
       args: {
-        id: { type: new GraphQLNonNull(GraphQLInt) },
+        // id: { type: new GraphQLNonNull(GraphQLInt) },
         username: { type: new GraphQLNonNull(GraphQLString) },
-        // accesstoken: { type: new GraphQLNonNull(GraphQLString) },
-        // refreshtoken: {type: new GraphQLNonNull(GraphQLString) },
+        accesstoken: { type: new GraphQLNonNull(GraphQLString) },
+        refreshtoken: {type: new GraphQLNonNull(GraphQLString) },
         password: { type: new GraphQLNonNull(GraphQLString) },
       },
       resolve: (parent, args) => {
+      //Graphql user input to be stored. 
         const user = {
-          id: users.length + 1,
           username: args.username,
           accesstoken: args.accesstoken,
           refreshtoken: args.refreshtoken,
           password: args.password
         }
-      users.push(user)
+
+      // Create in database
+      User.create({
+        username: user.username,
+        password: user.password,
+        accesstoken: user.accesstoken,
+        refreshtoken: user.refreshtoken,
+      }).then(function(res){
+      console.log(res) 
+      }).catch(error => {
+        console.log(error)
+      })
+      console.log(user)
+
       return user;
       }
     }

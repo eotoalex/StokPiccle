@@ -78,7 +78,8 @@ function Login (props){
           users {
           
            username
-           password
+           
+         
            
           }
               }`
@@ -108,25 +109,26 @@ function Login (props){
     //   data: {
     //     query:`mutation {
     //       addUser (
-    //         id:12
-    //         username: "ggodfree@gmail.com",
-    //         accesstoken: "test",
-    //         refreshtoken: "test",
+    //         username: "jspringer@gmail.com",
     //         password: "pass"
-    //       )
-    //       id 
+    //         accesstoken: "uer93487ur3984u983ur"
+    //         refreshtoken: "u498u30r948u309",
+           
+    //       ){
+    //       id
     //       username
-    //       accesstoken
-    //       refreshtoken
     //       password
-    //           }`
+    //       refreshtoken
+    //       accesstoken
+    //           }
+    //         }`
     //         } 
     // })
     // .then( async (res, req) => { 
     //   result = res.data.data;
     //   console.log("RESULT = ",result)
     //   if (result){
-    //     store.dispatch(action.userLoginAction());
+    //     store.dispatch(action.addUserAction());
     //   } else {
     //     return false
     //   }
@@ -134,8 +136,8 @@ function Login (props){
     // .catch((err) => {
     //     console.log(err)
     // })
-   
-    
+
+
     return result;
   }
 
