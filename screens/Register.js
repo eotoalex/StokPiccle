@@ -149,7 +149,7 @@ function Register(props){
     return regex.test(uInEmail)
   };
 
-  const submitForm = () => {
+  const submitForm =  () => {
     const username = inputUserName.toLowerCase().replace(/\s+/g, '');
     const email = inputEmail.toLowerCase();
     const password = firstPass.password;
@@ -161,24 +161,8 @@ function Register(props){
     if (addToDB){
       // THIS FUNCTION CAN TAKE ALL THE INPUTS AND THEN I WILL PROCESS THE USER INFORMATION AGAINST THE DB IN THE BACK END.
 
-      axios({
-        url: 'http://localhost:4001/graphql',
-        method: 'post',
-        data: {
-          query:`mutation {
-                  createUser(
-                    username: "${state.userNameInput}", 
-                    email: "${state.emailInput}", 
-                    password: "${state.passwordInputFirst}")
-                    {username email password}}`
-        }
-      })
-      .then(function(response){
-          console.log("RESPONSE TO THE REQUEST => ",response)
-      })
-      .catch((err) => {
-          console.log(err)
-      })
+     
+      
       console.log("User Added")
       addToDB = null;
       
