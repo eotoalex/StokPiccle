@@ -13,7 +13,8 @@ import {StyleSheet} from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-var addToDB = null;
+// The Default is null, but I will make it true as I test mutations.
+var addToDB = true;
 var validEmail = true;
 var validUsername = true;
 var validPass = true;
@@ -149,7 +150,7 @@ function Register(props){
     return regex.test(uInEmail)
   };
 
-  const submitForm =  () => {
+  const submitForm =  async () => {
     const username = inputUserName.toLowerCase().replace(/\s+/g, '');
     const email = inputEmail.toLowerCase();
     const password = firstPass.password;
@@ -157,10 +158,54 @@ function Register(props){
     
    
     // mapFunc(username, email, password, secPassword)
-    console.log("INSIDE SUBMITT FORM FUNCTION")
-    if (addToDB){
-      // THIS FUNCTION CAN TAKE ALL THE INPUTS AND THEN I WILL PROCESS THE USER INFORMATION AGAINST THE DB IN THE BACK END.
+    console.log("INSIDE SUBMITT FORM FUNCTION");
 
+    if (addToDB){
+      console.log("addToDB", `"${inputEmail}"`, `"${firstPass}"`)
+
+    // const inputUserName = state.userNameInput;
+    // const inputEmail = state.emailInput;
+    // const firstPass = state.passwordInputFirst;
+    // const secPass = state.passwordInputSecond;
+
+    // THIS FUNCTION CAN TAKE ALL THE INPUTS AND THEN I WILL PROCESS THE USER INFORMATION AGAINST THE DB IN THE BACK END.
+      await axios({
+      url: 'http://localhost:4001/graphql',
+      method: 'post',
+      responseType:'json',
+      headers: {
+        'Content-Type' : 'application/json',
+        'Accept' : 'application/json'
+      },
+      data: {
+        query:`mutation {
+          addUser (
+            username: "${inputEmail}",
+            password: "${firstPass}"
+            accesstoken: "uer93487ur3984u983ur1"
+            refreshtoken: "u498u30r948u30911",
+          ){
+          id
+          username
+          password
+          refreshtoken
+          accesstoken
+              }
+            }`
+            } 
+    })
+    .then( async (res, req) => { 
+      result = res.data.data;
+      console.log("RESULT = ",result)
+      if (result){
+        store.dispatch(action.addUserAction());
+      } else {
+        return false
+      }
+    })
+    .catch((err) => {
+        console.log(err)
+    })
      
       
       console.log("User Added")
