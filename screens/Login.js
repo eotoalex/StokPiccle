@@ -13,6 +13,7 @@ import store from '../REDUX/store.js';
 import action from '../REDUX/actions/action';
 import {schema} from '../schema'
 import Svg, { Circle } from 'react-native-svg';
+import InputIcon from './icons/inputField';
 // import userLoginReset from '../REDUX/actions/action';
 // const argon2 = require('argon2');
 
@@ -178,11 +179,13 @@ function Login (props){
     return (
     <View>
       <Text style={styles.title} >Login</Text>
-      <Text> Email </Text>
-        <TextInput 
+      {/* <Text> Email </Text> */}
+      
+        {/* <TextInput 
+        
           // ref={input => { this.textInput = input }}
           type="text"
-          style={styles.input}
+          
           value = {email}
           onChangeText={(val) => {{
             setState(prevState => {
@@ -190,16 +193,16 @@ function Login (props){
             })
           }}
           }
-        />
-    <Svg height="50%" width="50%" viewBox="0 0 100 100" >
-      <Circle cx="50" cy="50" r="50" stroke="purple" strokeWidth=".5" fill="violet" />
-    </Svg>
+        >    </TextInput> */}
+        
+        <InputIcon />
+    
         <Text> Password </Text>
         <TextInput 
           // ref={input => { this.textInput = input }}
           secureTextEntry={true}
-          type="text"
-          style={styles.input}
+          // type="text"
+          // style={styles.input}
           value = {password}
           onChangeText={(val) => {{
             setState(prevState => {
@@ -208,6 +211,8 @@ function Login (props){
           }}
           }
         />
+
+
         {/* Register Link */}
          <Text 
         style={styles.registerLink}
