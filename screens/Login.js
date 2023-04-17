@@ -16,7 +16,7 @@ import Svg, { Circle } from 'react-native-svg';
 import InputIcon from './icons/inputField';
 // import userLoginReset from '../REDUX/actions/action';
 // const argon2 = require('argon2');
-
+// test
 function Login (props){
   const [state, setState] = useState({
     userEmail:"",
