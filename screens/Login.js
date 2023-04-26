@@ -16,7 +16,8 @@ import Svg, { Circle } from 'react-native-svg';
 import InputIcon from './icons/inputField';
 // import userLoginReset from '../REDUX/actions/action';
 // const argon2 = require('argon2');
-// testajf;lkds
+
+const CIK = '0001018724';
 function Login (props){
   const [state, setState] = useState({
     userEmail:"",
@@ -24,11 +25,110 @@ function Login (props){
     logIn: store.getState().login,
   })
   
-  // useEffect(() => {
-   
-    
-  // })
+ 
+
+  //TICKET SCALPING PARTITION TESTING
+  //Install IMDB code from Github in order to see concert dates.
+  //Install Ticket master API for event times and pricing.
   
+  // TicketMaster API
+  // axios.get("https://rest.bandsintown.com/artists/"+ concertSearch +"/events?app_id=codingbootcamp")
+  //                       .then(function(response){
+                            
+  //                           var numberOfEvents = response.data.length;
+
+                            
+  //                           console.log("\nCurrent Time: " + timeStamp);
+  //                           console.log("\nNumber of upcoming events found for\n "+concertSearch.split("+").join(" ")+": " + numberOfEvents);
+                            
+
+  //                           for(var i = 0; i < numberOfEvents; i++){
+  //                           var concertArr = [];
+  //                           var artists = response.data[i].lineup[0];    
+  //                           var venue = response.data[i].venue.name;
+  //                           var locationCountry = response.data[i].venue.country;
+  //                           var locationRegion = response.data[i].venue.region;
+  //                           var locationCity = response.data[i].venue.city;
+  //                           var dates = response.data[i].datetime;
+
+  //                           concertArr.push("\n");
+  //                           concertArr.push("Artist/Band: " + artists);
+  //                           concertArr.push("Venue: " + venue);
+  //                           concertArr.push("Country: " + locationCountry);
+  //                           concertArr.push("Region: " + locationRegion);
+  //                           concertArr.push("City: " + locationCity);
+  //                           concertArr.push("Event Dates: " + dates);
+  //                           concertArr.push("Logged search: " + timeStamp + ",");
+
+  //                           logToFile(concertArr);
+
+
+                            
+                        
+  //                           console.log("\n")
+  //                           console.log("Artist/Band: " + artists)
+  //                           console.log("Venue: " + venue);
+  //                           console.log("Location: " + locationCountry,locationRegion,locationCity);
+  //                           console.log("Event dates: " + moment(dates).format('MMMM Do YYYY, h:mm:ss a'));
+
+  //                           }
+  //                       })
+  //                       .catch(function onError(error) {   
+                            
+  //                           console.log(error);  });     
+  //                       }
+                    
+
+  
+
+
+
+
+
+  // STOCK ANALYSIS PARTITION TESTING
+
+    // axios({
+    //   method: 'get',
+    //   url:`https://data.sec.gov/submissions/CIK${CIK}.json`,
+    //   responseType: 'stream'
+    // })
+    //   .then(function (response) {
+    //     console.log(
+    //       response.data.name,'\n',
+    //       response.data.tickers[0],'\n',
+    //       response.data.cik,'\n',
+    //       response.data.sic,'\n',
+    //       response.data.ein,'\n',
+    //       response.data.filings.files[0].name,'\n',
+    //     )
+    //   });
+    
+
+    //   axios({
+    //     method: 'get',
+    //     url:`https://data.sec.gov/api/xbrl/companyconcept/CIK${CIK}/us-gaap/AccountsPayableCurrent.json`,
+    //     responseType: 'stream'
+    //   })
+    //     .then(function (response) {
+    //       console.log(
+    //         response
+    //       )
+    //     });
+
+
+
+        // axios({
+        //   method: 'get',
+        //   url:`https://data.sec.gov/api/xbrl/companyfacts/CIK${CIK}.json`,
+        //   responseType: 'stream'
+        // })
+        //   .then(function (response) {
+        //     console.log(
+        //       response
+        //     )
+        //   });
+  
+
   const email = state.userEmail;
   const password = state.userPass;
 
